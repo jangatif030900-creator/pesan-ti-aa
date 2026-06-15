@@ -24,7 +24,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 90%;
-            min-height: 250px;
+            min-height: 280px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -46,26 +46,38 @@
             margin-top: 5px;
         }
 
-        .sub-text {
-            font-size: 14px;
-            color: #7a7a7a;
-            font-style: italic;
+        /* Desain Beruang Lucu */
+        .bear-sticker {
+            font-size: 55px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+            animation: bounce 1.5s infinite;
         }
 
-        /* Tombol Love Pindah-pindah */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Area Tombol Love Pindah-pindah */
+        .love-area {
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .btn-love {
             background: none;
             border: none;
-            font-size: 50px;
+            font-size: 45px;
             cursor: pointer;
             transition: all 0.2s ease;
-            margin-top: 20px;
             user-select: none;
         }
 
-        .btn-love:hover {
-            transform: scale(1.2);
-        }
+        .btn-love:hover { transform: scale(1.2); }
 
         /* Desain Amplop Surat */
         .envelope-wrapper {
@@ -113,7 +125,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Animasi Haté Marurag */
         .heart {
             position: absolute;
             color: #ff477e;
@@ -143,18 +154,20 @@
 <body>
 
     <div class="container" id="box">
-        <h1 id="title">HALLO SAYANG ! ❤️</h1>
-        <p id="text">Klik love merah di handap bari seuri nyaa.. Upami teu seuri, moal tiasa kabuka tatananna 😋</p>
-        
-        <!-- Tombol Love Merah anu bakal pindah-pindah -->
-        <button class="btn-love" id="loveBtn" onclick="moveAndChange()">❤️</button>
+        <div class="bear-sticker" id="bear">🐻🧸</div>
 
-        <!-- Amplop Surat nu bakal muncul engké -->
+        <h1 id="title">HALLO SAYANG ! ❤️</h1>
+        <p id="text">Klik love merah di handap bari seuri nyaa.. Upami teu seuri, moal tiasa kabuka ceunah 😋</p>
+        
+        <div class="love-area" id="loveArea">
+            <button class="btn-love" id="loveBtn" onclick="moveAndChange()">❤️</button>
+        </div>
+
         <div class="envelope-wrapper" id="envelopeContainer" onclick="openLetter()">
             <div class="envelope">
                 <div class="envelope-love">❤️</div>
             </div>
-            <p class="sub-text" style="margin-top: 10px; font-weight: bold;">Klik love dina amplop kanggo muka surat ti a Latip...</p>
+            <p style="font-size: 14px; color: #7a7a7a; font-style: italic; margin-top: 10px; font-weight: bold;">Klik love dina amplop kanggo muka surat ti a Latip...</p>
         </div>
         
         <button class="btn-next" id="nextBtn" style="display:none;" onclick="nextLetterStage()">Klik Heula Kadieu Neng 🥺</button>
@@ -168,28 +181,31 @@
             clickCount++;
             const title = document.getElementById('title');
             const text = document.getElementById('text');
-            const loveBtn = document.getElementById('loveBtn');
+            const bear = document.getElementById('bear');
+            const loveArea = document.getElementById('loveArea');
             const envelopeContainer = document.getElementById('envelopeContainer');
 
             if (clickCount === 1) {
+                bear.innerText = "🐻❓"; // Beruang bingung
                 title.innerText = "Yahhh... 😮‍💨";
                 text.innerText = "Katingalina mah teu seuri neng dara na nya? Hayu seuri heula, cobian klik deui lovena!";
-                // Pindah posisi sakedik supados lucu
-                loveBtn.style.transform = "translateX(50px) scale(0.9)";
+                loveArea.style.transform = "translateX(60px) scale(0.9)";
             } 
             else if (clickCount === 2) {
+                bear.innerText = "🐻🙈"; // Beruang isin/gandeng
                 title.innerText = "Eitss, Teu Tiasa! 😜";
                 text.innerText = "Ih eta seurina katingali jiga nu kapaksa pisan, ih bieu mah! Cobi sakali deui, sing ikhlas seurinaa.. Klik deui lovena!";
-                loveBtn.style.transform = "translateX(-60px) translateY(-10px) scale(1.1)";
+                loveArea.style.transform = "translateX(-70px) translateY(-10px) scale(1.1)";
             } 
             else if (clickCount === 3) {
+                bear.innerText = "🐻🥺"; // Beruang sedih olo-olo
                 title.innerText = "Ih, Masi Ngambek? 🥺";
                 text.innerText = "Masi ngambek ka a Latip? Naha atuh bet teu seuri waé? Cobi ayeuna klik sing bener bari seuri pang geulisna, pasti tiasa kabuka!";
-                loveBtn.style.transform = "translateY(20px) scale(1.3)";
+                loveArea.style.transform = "translateY(25px) scale(1.2)";
             } 
             else if (clickCount === 4) {
-                // Sembunyikeun tombol love merah, ganti ku amplop surat
-                loveBtn.style.display = 'none';
+                loveArea.style.display = 'none'; // Sembunyikeun area love & beruang nu ulin
+                bear.innerText = "🐻🎉"; // Beruang bungah!
                 title.innerText = "Nahhh Kitu Atuh! 😊✨";
                 text.innerText = "Aya amplop surat ti a Latip khusus kanggo neng dara...";
                 envelopeContainer.style.display = 'block';
@@ -199,11 +215,12 @@
         function openLetter() {
             const title = document.getElementById('title');
             const text = document.getElementById('text');
+            const bear = document.getElementById('bear');
             const envelopeContainer = document.getElementById('envelopeContainer');
             const nextBtn = document.getElementById('nextBtn');
 
-            // Sembunyikeun amplop, munculkeun eusi surat kahiji
             envelopeContainer.style.display = 'none';
+            bear.innerText = "🐻🙏"; // Beruang menta hampura
             title.innerText = "Hapunten nya, Neng... 🥺🙏";
             text.innerText = "Neng, aa mnta hampura nya nu ntos-ntos, aa bner\" menta maaf geus nyieun neng kecewa ka aa, aa t aya maksud bikin neng kesel padahal kanyataan na neng kesel, tong ngambek deui nya sayang 🥹🙏🏻";
             nextBtn.style.display = 'block';
@@ -212,24 +229,27 @@
         function nextLetterStage() {
             const title = document.getElementById('title');
             const text = document.getElementById('text');
+            const bear = document.getElementById('bear');
             const nextBtn = document.getElementById('nextBtn');
 
             if (letterStage === 0) {
+                bear.innerText = "🐻💭"; // Beruang kapikiran
                 title.innerText = "Aa Kapikiran Wae... 😔";
                 text.innerText = "Aa kapikiran wae, ayna teh neng jeung aa ldr modalna ngan ukur chat hngkul jeung vc mun smpet eta ge, aa sok sieun jeung hariwang neng bosen ku kaayaan aa nu serba terbatas ieu 🥹";
                 nextBtn.innerText = "Sakedap, Aya Deui...";
                 letterStage++;
             } else if (letterStage === 1) {
+                bear.innerText = "🐻⏳"; // Beruang nungguan satia
                 title.innerText = "Aa Bakal Satia Ngantosan 🤲✨";
                 text.innerText = "Aa paham kamari aa seer salah na, aa bakal ngantosan neng sampe ka neng nu biasa chat aa bahagia 🥹 ku aa di antos nya sanajan lami oge 🥹";
                 nextBtn.innerText = "Nu Terakhir Ti Aa... ❤️";
                 letterStage++;
             } else if (letterStage === 2) {
+                bear.innerText = "🐻💝✨"; // Beruang pinuh ku cinta
                 title.innerText = "I Love You Sayangku! ❤️";
-                text.innerText = "Teu bosen-bosen aa ngomong kieu ka neng, te kedah rurusuhan dibales 'ilove u too' ayna ge teu nanaon, nu penting neng na ntong ambek deui ka aa nya 🥹, semangat kuliah na sing bageur sayang, tong baeud wae ka aa nya? ilove u sayang ku 🥹👉🏻👈🏻";
+                text.innerText = "Teu bosen-bosen aa ngomong kieu ka neng, te kedah rurusuhan dibales 'ilove u too' ayna ge teu nanaon, nu penting neng na ntong ambek deui ka aa nya 🥹, semangat kuliah na sing bageur sayang, tong baeud wae ka aa nya? ilove u sayang ku 🥹👉🙏🏻👈";
                 nextBtn.style.display = 'none';
                 
-                // Efek haté marurag/ngalayang kaluhur
                 setInterval(createHeart, 300);
             }
         }
